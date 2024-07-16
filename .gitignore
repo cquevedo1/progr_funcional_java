@@ -37,3 +37,5 @@ build/
 
 ##Ignore Compiling Script
 jar-creator.sh
+/out/
+/.idea/
