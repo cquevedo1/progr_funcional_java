@@ -1,0 +1,44 @@
+package main.java.com.cristianquevedo.funcional;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+    new Main();
+    }
+        public Main() {
+//        Objetivos:
+//                1- Crear una lista de enteros
+            List<Integer> numeros = crearLista();
+            System.out.println(numeros);
+//                2- Quedarme solo con los pares
+            List<Integer> pares = filtrarPares(numeros);
+            System.out.println(pares);
+//                3- Pasar cada número al cuadrado
+//                4- Mostrar cada uno de los números al cuadrado por pantalla
+//                5- Obtener la suma de los cuadrados
+
+
+        }
+
+        //Versión imperativa
+        private List<Integer> crearLista() {
+            //List.of construye una lista inmutable
+            //es decir, cada operación que se realice va creando una nueva lista
+            // y no modifica la lista original
+            return List.of(0,1,2,3,5,8,13,21,34,55,89,144);
+        }
+
+        private List<Integer> filtrarPares(List<Integer> numeros) {
+            List<Integer> pares = new ArrayList<>();
+            //Se recorre la lista y se agregan a la lista pares
+            // solo los números de la lista original que sean pares
+            for (Integer numero : numeros) {
+                if (numero % 2 == 0) {
+                    pares.add(numero);
+                }
+            }
+            return pares;
+        }
+    }
