@@ -39,3 +39,5 @@ build/
 jar-creator.sh
 /out/
 /.idea/
+/production/
+/.gitignore/
