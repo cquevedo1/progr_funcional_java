@@ -15,7 +15,7 @@ public class Main {
 //                2- Quedarme solo con los pares
         List<Integer> pares = filtrarPares(numeros);
             System.out.println(pares);
-//                3- Pasar cada número al cuadrado
+//                3- Obtener el cuadrado de cada número
         List<Integer> cuadrados = elevarAlCuadrado(pares);
         System.out.println(cuadrados);
 //                4- Mostrar cada uno de los números al cuadrado por pantalla
