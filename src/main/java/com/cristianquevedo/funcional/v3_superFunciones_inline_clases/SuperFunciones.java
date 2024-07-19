@@ -1,14 +1,16 @@
-package main.java.com.cristianquevedo.funcional.v2_superfunciones_clases;
+package main.java.com.cristianquevedo.funcional.v3_superFunciones_inline_clases;
 
-import main.java.com.cristianquevedo.funcional.v2_superfunciones_clases.interfaces.Consumidor;
-import main.java.com.cristianquevedo.funcional.v2_superfunciones_clases.interfaces.Funcion;
-import main.java.com.cristianquevedo.funcional.v2_superfunciones_clases.interfaces.Predicado;
-import main.java.com.cristianquevedo.funcional.v2_superfunciones_clases.interfaces.Proveedor;
+import main.java.com.cristianquevedo.funcional.v3_superFunciones_inline_clases.interfaces.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Superfunciones {
+public class SuperFunciones {
+
+    private SuperFunciones(){
+        throw new UnsupportedOperationException("Operación no soportada.");
+    }
+
     public static List<Integer> filtrar(List<Integer> valores, Predicado predicado) {
         List<Integer> resultado = new ArrayList<>();
         for (Integer valor : valores) {
@@ -48,4 +50,14 @@ public class Superfunciones {
             consumidor.aceptar(valor);
         }
     }
+
+    public static Integer reducir(List<Integer> valores, Integer identidad,
+                                  FuncionBinaria funcionBinaria) {
+        int resultado = identidad;
+        for (Integer valor : valores) {
+            resultado = funcionBinaria.aplicar(resultado, valor);
+        }
+        return resultado;
+    }
+
 }

@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         new Main();
     }
-    public Main() {
+    private Main() {
 //        Objetivos:
 //                1- Crear una lista de enteros
         List<Integer> numeros = crearLista();
