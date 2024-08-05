@@ -2,6 +2,7 @@ package main.java.com.cristianquevedo.funcional.v15_collect;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -17,9 +18,10 @@ public class Main {
                 new Book("978-25", "The Hobbit", 2017, Genre.THRILLER)
         );
 
-        List<Book> result = myBooks.stream()
+        Set<Book> result = myBooks.stream()
                 .filter(book -> book.getYearOfPublication() < 2000)
-                .collect((Collectors.toList()));
+//                .collect((Collectors.toList()));
+                .collect((Collectors.toSet()));
         result.add(new Book("algo", "algo", 1500, Genre.NOVELA));
         System.out.println(result);
     }
