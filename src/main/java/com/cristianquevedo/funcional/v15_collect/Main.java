@@ -2,7 +2,9 @@ package main.java.com.cristianquevedo.funcional.v15_collect;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -18,11 +20,15 @@ public class Main {
                 new Book("978-25", "The Hobbit", 2017, Genre.THRILLER)
         );
 
-        Set<Book> result = myBooks.stream()
+        Map<String, Book> result = myBooks.stream()
+                .distinct()
                 .filter(book -> book.getYearOfPublication() < 2000)
 //                .collect((Collectors.toList()));
-                .collect((Collectors.toSet()));
-        result.add(new Book("algo", "algo", 1500, Genre.NOVELA));
+//                .collect((Collectors.toSet()));
+//        .collect(Collectors.toMap(book -> book.getIsbn(), book -> book));
+                //Con referencia a método
+//                .collect(Collectors.toMap(Book::getIsbn, book -> book));
+                .collect(Collectors.toMap(Book::getIsbn, Function.identity()));
         System.out.println(result);
     }
 }
