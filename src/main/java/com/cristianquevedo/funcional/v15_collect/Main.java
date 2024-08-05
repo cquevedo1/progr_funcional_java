@@ -21,14 +21,19 @@ public class Main {
         );
 
         Map<String, Book> result = myBooks.stream()
-                .distinct()
                 .filter(book -> book.getYearOfPublication() < 2000)
 //                .collect((Collectors.toList()));
 //                .collect((Collectors.toSet()));
 //        .collect(Collectors.toMap(book -> book.getIsbn(), book -> book));
                 //Con referencia a método
 //                .collect(Collectors.toMap(Book::getIsbn, book -> book));
-                .collect(Collectors.toMap(Book::getIsbn, Function.identity()));
+
+                //otra opción, al tener la misma clave los agrupa
+                .collect(Collectors.toMap(Book::getIsbn, Function.identity(),
+                        (book1, book2) -> new Book(book1.getIsbn(),
+                                book1.getTitle() + "+",
+                                book1.getYearOfPublication(),
+                                book1.getGenre())));
         System.out.println(result);
     }
 }
