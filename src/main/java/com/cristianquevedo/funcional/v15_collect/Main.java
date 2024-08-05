@@ -1,9 +1,6 @@
 package main.java.com.cristianquevedo.funcional.v15_collect;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -31,9 +28,11 @@ public class Main {
                 //otra opción, al tener la misma clave los agrupa
                 .collect(Collectors.toMap(Book::getIsbn, Function.identity(),
                         (book1, book2) -> new Book(book1.getIsbn(),
-                                book1.getTitle() + "+",
+                                book1.getTitle() + " + ",
                                 book1.getYearOfPublication(),
-                                book1.getGenre())));
+                                book1.getGenre()),
+                        () -> new TreeMap<>(String.CASE_INSENSITIVE_ORDER))
+                );
         System.out.println(result);
     }
 }
