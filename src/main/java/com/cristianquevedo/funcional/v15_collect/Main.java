@@ -37,10 +37,24 @@ public class Main {
 
         //Stream hacia array
 
-        Book[] result = myBooks.stream()
-                .filter(book -> book.getYearOfPublication() > 2000)
+//        Book[] result = myBooks.stream()
+//                .filter(book -> book.getYearOfPublication() > 2000)
+//                .distinct()
+//                .toArray(Book[]::new);
+//        Arrays.stream(result).forEach(System.out::println);
+
+
+        //Stream a string
+//        String result = myBooks.stream()
+//                .distinct()
+//                .map(Book::getTitle)
+//                .collect(Collectors.joining(", ","[","]"));
+//        System.out.println(result);
+
+        //Stream a string 2da opcion (menos optimizada)
+        String result = myBooks.stream()
                 .distinct()
-                .toArray(Book[]::new);
-        Arrays.stream(result).forEach(System.out::println);
+                .collect(Collectors.mapping(Book::getTitle, Collectors.joining(", ")));
+        System.out.println(result);
     }
 }
