@@ -64,10 +64,34 @@ public class Main {
 //        System.out.println(result );
 
         //Collect de un stream con agrupación que solo muestra los titulos de los libros
-        Map<Integer, String> result = myBooks.stream()
-                .collect(Collectors.groupingBy(Book::getYearOfPublication,
-                        Collectors.mapping(Book::getTitle,
-                                Collectors.joining(",","[","]"))));
+//        Map<Integer, String> result = myBooks.stream()
+//                .collect(Collectors.groupingBy(Book::getYearOfPublication,
+//                        Collectors.mapping(Book::getTitle,
+//                                Collectors.joining(",","[","]"))));
+//        System.out.println(result);
+        
+        //Recolector de reduccion simple (queremos contar la cantidad de libros en cada año
+//        Map<Integer, Long> result = myBooks.stream()
+//                .collect(Collectors.groupingBy(Book::getYearOfPublication,
+//                        Collectors.counting()));
+//        System.out.println(result);
+
+        //Recolector de reduccion simple (suma de años)
+//        Map<Genre, Integer> result = myBooks.stream()
+//                .collect(Collectors.groupingBy(Book::getGenre,
+//                        Collectors.summingInt(Book::getYearOfPublication)));
+//        System.out.println(result);
+
+        //Recolector de reduccion simple (menor año según genero)
+//        Map<Genre, Optional<Book>> result = myBooks.stream()
+//                .collect(Collectors.groupingBy(Book::getGenre,
+//                        Collectors.minBy(Comparator.comparing(Book::getYearOfPublication))));
+//        System.out.println(result);
+
+        //Recolector de reducción simple (estadística)
+        Map<Genre, IntSummaryStatistics> result = myBooks.stream()
+                .collect(Collectors.groupingBy(Book::getGenre,
+                        Collectors.summarizingInt(Book::getYearOfPublication)));
         System.out.println(result);
     }
 }
