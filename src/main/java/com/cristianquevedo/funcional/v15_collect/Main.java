@@ -16,9 +16,9 @@ public class Main {
                 new Book("923-45", "Puente al infinito", 1998, Genre.NOVELA),
                 new Book("978-25", "The Hobbit", 2017, Genre.THRILLER)
         );
-
-        Map<String, Book> result = myBooks.stream()
-                .filter(book -> book.getYearOfPublication() < 2000)
+//
+//        Map<String, Book> result = myBooks.stream()
+//                .filter(book -> book.getYearOfPublication() < 2000)
 //                .collect((Collectors.toList()));
 //                .collect((Collectors.toSet()));
 //        .collect(Collectors.toMap(book -> book.getIsbn(), book -> book));
@@ -26,13 +26,21 @@ public class Main {
 //                .collect(Collectors.toMap(Book::getIsbn, book -> book));
 
                 //otra opción, al tener la misma clave los agrupa
-                .collect(Collectors.toMap(Book::getIsbn, Function.identity(),
-                        (book1, book2) -> new Book(book1.getIsbn(),
-                                book1.getTitle() + " + ",
-                                book1.getYearOfPublication(),
-                                book1.getGenre()),
-                        () -> new TreeMap<>(String.CASE_INSENSITIVE_ORDER))
-                );
-        System.out.println(result);
+//                .collect(Collectors.toMap(Book::getIsbn, Function.identity(),
+//                        (book1, book2) -> new Book(book1.getIsbn(),
+//                                book1.getTitle() + " + ",
+//                                book1.getYearOfPublication(),
+//                                book1.getGenre()),
+//                        () -> new TreeMap<>(String.CASE_INSENSITIVE_ORDER))
+//                );
+//        System.out.println(result);
+
+        //Stream hacia array
+
+        Book[] result = myBooks.stream()
+                .filter(book -> book.getYearOfPublication() > 2000)
+                .distinct()
+                .toArray(Book[]::new);
+        Arrays.stream(result).forEach(System.out::println);
     }
 }
