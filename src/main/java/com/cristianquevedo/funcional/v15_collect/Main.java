@@ -22,10 +22,10 @@ public class Main {
 //                .collect((Collectors.toList()));
 //                .collect((Collectors.toSet()));
 //        .collect(Collectors.toMap(book -> book.getIsbn(), book -> book));
-                //Con referencia a método
+        //Con referencia a método
 //                .collect(Collectors.toMap(Book::getIsbn, book -> book));
 
-                //otra opción, al tener la misma clave los agrupa
+        //otra opción, al tener la misma clave los agrupa
 //                .collect(Collectors.toMap(Book::getIsbn, Function.identity(),
 //                        (book1, book2) -> new Book(book1.getIsbn(),
 //                                book1.getTitle() + " + ",
@@ -52,9 +52,22 @@ public class Main {
 //        System.out.println(result);
 
         //Stream a string 2da opcion (menos optimizada)
-        String result = myBooks.stream()
-                .distinct()
-                .collect(Collectors.mapping(Book::getTitle, Collectors.joining(", ")));
+//        String result = myBooks.stream()
+//                .distinct()
+//                .collect(Collectors.mapping(Book::getTitle, Collectors.joining(", ")));
+//        System.out.println(result);
+
+
+        //Collect de un stream con agrupacion
+//      Map<Integer,List<Book>> result = myBooks.stream()
+//                .collect(Collectors.groupingBy(Book::getYearOfPublication));
+//        System.out.println(result );
+
+        //Collect de un stream con agrupación que solo muestra los titulos de los libros
+        Map<Integer, String> result = myBooks.stream()
+                .collect(Collectors.groupingBy(Book::getYearOfPublication,
+                        Collectors.mapping(Book::getTitle,
+                                Collectors.joining(",","[","]"))));
         System.out.println(result);
     }
 }
