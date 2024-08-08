@@ -1,6 +1,5 @@
 package main.java.com.cristianquevedo.funcional.v15_collect;
 
-import org.w3c.dom.ls.LSOutput;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -154,13 +153,28 @@ public class Main {
 //
 //        System.out.println(result);
 
-        //recolectar stream y aplicar función
 
-        Map<Integer, String> result = myBooks.stream()
-                .collect(groupingBy(Book::yearOfPublication,
-                        collectingAndThen(counting(), valor -> valor + " libros")));
+        //recolectar stream y aplicar función (int a string)
+//        Map<Integer, String> result = myBooks.stream()
+//                .collect(groupingBy(Book::yearOfPublication,
+//                        collectingAndThen(counting(), valor -> valor + " libros")));
+//
+//        System.out.println(result);
 
-        System.out.println(result);
+        //Recolección doble y combinación. Se desea calcular la diferencia de años
+        // entre el libro mas viejo y el más nuevo
+        myBooks.stream()
+                .map(Book::yearOfPublication)
+                .collect(teeing(
+                                maxBy(Integer::compare),
+                                minBy(Integer::compare),
+                                (maxOptional, minOptional) -> maxOptional.map(max -> max - minOptional.get())
+                        )
+                )
+                .ifPresentOrElse(
+                        (diferencia -> System.out.println("Diferencia entre el más viejo y el mas nuevo: " + diferencia +
+                                " años")),
+                        () -> System.out.println("No hay libros en la lista"));
 
     }
 }
