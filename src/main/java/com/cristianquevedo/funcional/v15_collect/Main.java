@@ -1,5 +1,7 @@
 package main.java.com.cristianquevedo.funcional.v15_collect;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.*;
 
 public class Main {
@@ -110,9 +112,30 @@ public class Main {
 //        System.out.println(result);
 
         //Ordenamiento con comparadores avanzados
+//        myBooks.stream()
+//                .sorted(Comparator.comparing(Book::title)
+//                        .thenComparing(Book::yearOfPublication))
+//                .forEach(System.out::println);
+
+
+        //métodos map y filter de optional
+//        myBooks.stream()
+//                .sorted(Comparator.comparing(Book::title)
+//                        .thenComparing(Book::yearOfPublication))
+//                .findFirst()
+//                .map(Book::title)
+//                .ifPresentOrElse(System.out::println,
+//                        () -> System.out.println("No hay primer Libro"));
+
+
+        //Ahora queremos mostrar el titulo del primer libro solo si, por ejemplo, el género es de novela
         myBooks.stream()
                 .sorted(Comparator.comparing(Book::title)
                         .thenComparing(Book::yearOfPublication))
-                .forEach(System.out::println);
+                .findFirst()
+                .filter(book -> book.genre().equals(Genre.NOVELA))
+                .map(Book::title)
+                .ifPresentOrElse(System.out::println,
+                        () -> System.out.println("No hay primer Libro o el primer libro no es una novela"));
     }
 }
