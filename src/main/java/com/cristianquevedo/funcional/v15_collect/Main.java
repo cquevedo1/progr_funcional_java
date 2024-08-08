@@ -3,6 +3,7 @@ package main.java.com.cristianquevedo.funcional.v15_collect;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
@@ -99,9 +100,16 @@ public class Main {
 //                .collect(Collectors.partitioningBy(book -> book.getYearOfPublication() < 2000));
 //        System.out.println(result);
 
+//        //En el caso de que solo queramos saber el total de libros se podría realizar lo siguiente
+//        Map<Boolean, Long> result = myBooks.stream()
+//                .collect(Collectors.partitioningBy(book -> book.getYearOfPublication() < 2000, Collectors.counting()));
+//        System.out.println(result);
+        
+        //Recoleccion de Stream con filtrado: ¿Cuántos libros de cada género hay y que sean de este siglo?
         //En el caso de que solo queramos saber el total de libros se podría realizar lo siguiente
-        Map<Boolean, Long> result = myBooks.stream()
-                .collect(Collectors.partitioningBy(book -> book.getYearOfPublication() < 2000, Collectors.counting()));
+        Map<Genre, Long> result = myBooks.stream()
+                .collect(Collectors.groupingBy(Book::getGenre, Collectors
+                        .filtering(book -> book.getYearOfPublication() >= 2000, Collectors.counting())));
         System.out.println(result);
     }
 }
