@@ -3,12 +3,23 @@ package main.java.com.cristianquevedo.funcional.v15_collect;
 import org.w3c.dom.ls.LSOutput;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.*;
 
 public class Main {
     public static void main(String[] args) {
         new Main();
     }
     public Main() {
+
+        List<Book> myBooks = Arrays.asList(
+                new Book("345-89", "Los ojos del dragon", 2018, Genre.TERROR),
+                new Book("923-45", "Puente al infinito", 1998, Genre.NOVELA),
+                new Book("978-25", "The Hobbit", 2017, Genre.THRILLER),
+                new Book("923-45", "Puente al infinito", 1998, Genre.NOVELA),
+                new Book("978-25", "The Hobbit", 2016, Genre.THRILLER)
+        );
 
 //
 //        Map<String, Book> result = myBooks.stream()
@@ -134,29 +145,22 @@ public class Main {
 
 
         //Método stream de optional
-        List<String> isbns = List.of("345-89","978-25","no existe");
+//        List<String> isbns = List.of("345-89","978-25","no existe");
+//
+//        List<Book> result = isbns.stream()
+//                .map(this::findByBookByIsbn)
+//                .flatMap(Optional::stream)
+//                .toList();
+//
+//        System.out.println(result);
 
-        List<Book> result = isbns.stream()
-                .map(this::findByBookByIsbn)
-                .flatMap(Optional::stream)
-                .toList();
+        //recolectar stream y aplicar función
+
+        Map<Integer, String> result = myBooks.stream()
+                .collect(groupingBy(Book::yearOfPublication,
+                        collectingAndThen(counting(), valor -> valor + " libros")));
 
         System.out.println(result);
 
-
     }
-
-   Optional<Book> findByBookByIsbn(String isbn) {
-       List<Book> myBooks = Arrays.asList(
-               new Book("345-89", "Los ojos del dragon", 2018, Genre.TERROR),
-               new Book("923-45", "Puente al infinito", 1998, Genre.NOVELA),
-               new Book("978-25", "The Hobbit", 2017, Genre.THRILLER),
-               new Book("923-45", "Puente al infinito", 1998, Genre.NOVELA),
-               new Book("978-25", "The Hobbit", 2016, Genre.THRILLER)
-       );
-    return    myBooks.stream()
-               .filter(book -> book.isbn()
-                       .equals(isbn))
-               .findFirst();
-   }
 }
