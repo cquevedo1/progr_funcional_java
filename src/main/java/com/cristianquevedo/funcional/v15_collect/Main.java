@@ -1,9 +1,6 @@
 package main.java.com.cristianquevedo.funcional.v15_collect;
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
@@ -15,7 +12,7 @@ public class Main {
                 new Book("923-45", "Puente al infinito", 1998, Genre.NOVELA),
                 new Book("978-25", "The Hobbit", 2017, Genre.THRILLER),
                 new Book("923-45", "Puente al infinito", 1998, Genre.NOVELA),
-                new Book("978-25", "The Hobbit", 2017, Genre.THRILLER)
+                new Book("978-25", "The Hobbit", 2016, Genre.THRILLER)
         );
 //
 //        Map<String, Book> result = myBooks.stream()
@@ -107,9 +104,15 @@ public class Main {
         
         //Recoleccion de Stream con filtrado: ¿Cuántos libros de cada género hay y que sean de este siglo?
         //En el caso de que solo queramos saber el total de libros se podría realizar lo siguiente
-        Map<Genre, Long> result = myBooks.stream()
-                .collect(Collectors.groupingBy(Book::getGenre, Collectors
-                        .filtering(book -> book.getYearOfPublication() >= 2000, Collectors.counting())));
-        System.out.println(result);
+//        Map<Genre, Long> result = myBooks.stream()
+//                .collect(Collectors.groupingBy(Book::getGenre, Collectors
+//                        .filtering(book -> book.getYearOfPublication() >= 2000, Collectors.counting())));
+//        System.out.println(result);
+
+        //Ordenamiento con comparadores avanzados
+        myBooks.stream()
+                .sorted(Comparator.comparing(Book::title)
+                        .thenComparing(Book::yearOfPublication))
+                .forEach(System.out::println);
     }
 }

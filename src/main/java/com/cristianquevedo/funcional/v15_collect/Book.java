@@ -3,37 +3,12 @@ package main.java.com.cristianquevedo.funcional.v15_collect;
 
 import java.util.Objects;
 
-public class Book {
+public record Book(String isbn, String title, int yearOfPublication, Genre genre) {
 
-    private final String isbn;
-    private final String title;
-    private final int yearOfPublication;
-    private final Genre genre;
-
-    public Book(String isbn, String title, int yearOfPublication, Genre genre) {
+    public Book {
         Objects.requireNonNull(isbn);
         Objects.requireNonNull(title);
         Objects.requireNonNull(genre);
-        this.isbn = isbn;
-        this.title = title;
-        this.yearOfPublication = yearOfPublication;
-        this.genre = genre;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public int getYearOfPublication() {
-        return yearOfPublication;
-    }
-
-    public Genre getGenre() {
-        return genre;
     }
 
     @Override
@@ -57,8 +32,4 @@ public class Book {
                 genre == book.genre;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(isbn, title, yearOfPublication, genre);
-    }
 }
