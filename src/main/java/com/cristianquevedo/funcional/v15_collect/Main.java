@@ -89,9 +89,19 @@ public class Main {
 //        System.out.println(result);
 
         //Recolector de reducción simple (estadística)
-        Map<Genre, IntSummaryStatistics> result = myBooks.stream()
-                .collect(Collectors.groupingBy(Book::getGenre,
-                        Collectors.summarizingInt(Book::getYearOfPublication)));
+//        Map<Genre, IntSummaryStatistics> result = myBooks.stream()
+//                .collect(Collectors.groupingBy(Book::getGenre,
+//                        Collectors.summarizingInt(Book::getYearOfPublication)));
+//        System.out.println(result);
+
+        //Recolección de un stream con partición (separa en dos grupos según un predicado)
+//        Map<Boolean, List<Book>> result = myBooks.stream()
+//                .collect(Collectors.partitioningBy(book -> book.getYearOfPublication() < 2000));
+//        System.out.println(result);
+
+        //En el caso de que solo queramos saber el total de libros se podría realizar lo siguiente
+        Map<Boolean, Long> result = myBooks.stream()
+                .collect(Collectors.partitioningBy(book -> book.getYearOfPublication() < 2000, Collectors.counting()));
         System.out.println(result);
     }
 }
