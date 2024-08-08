@@ -9,13 +9,7 @@ public class Main {
         new Main();
     }
     public Main() {
-        List<Book> myBooks = Arrays.asList(
-                new Book("345-89", "Los ojos del dragon", 2018, Genre.TERROR),
-                new Book("923-45", "Puente al infinito", 1998, Genre.NOVELA),
-                new Book("978-25", "The Hobbit", 2017, Genre.THRILLER),
-                new Book("923-45", "Puente al infinito", 1998, Genre.NOVELA),
-                new Book("978-25", "The Hobbit", 2016, Genre.THRILLER)
-        );
+
 //
 //        Map<String, Book> result = myBooks.stream()
 //                .filter(book -> book.getYearOfPublication() < 2000)
@@ -129,13 +123,40 @@ public class Main {
 
 
         //Ahora queremos mostrar el titulo del primer libro solo si, por ejemplo, el género es de novela
-        myBooks.stream()
-                .sorted(Comparator.comparing(Book::title)
-                        .thenComparing(Book::yearOfPublication))
-                .findFirst()
-                .filter(book -> book.genre().equals(Genre.NOVELA))
-                .map(Book::title)
-                .ifPresentOrElse(System.out::println,
-                        () -> System.out.println("No hay primer Libro o el primer libro no es una novela"));
+//        myBooks.stream()
+//                .sorted(Comparator.comparing(Book::title)
+//                        .thenComparing(Book::yearOfPublication))
+//                .findFirst()
+//                .filter(book -> book.genre().equals(Genre.NOVELA))
+//                .map(Book::title)
+//                .ifPresentOrElse(System.out::println,
+//                        () -> System.out.println("No hay primer Libro o el primer libro no es una novela"));
+
+
+        //Método stream de optional
+        List<String> isbns = List.of("345-89","978-25","no existe");
+
+        List<Book> result = isbns.stream()
+                .map(this::findByBookByIsbn)
+                .flatMap(Optional::stream)
+                .toList();
+
+        System.out.println(result);
+
+
     }
+
+   Optional<Book> findByBookByIsbn(String isbn) {
+       List<Book> myBooks = Arrays.asList(
+               new Book("345-89", "Los ojos del dragon", 2018, Genre.TERROR),
+               new Book("923-45", "Puente al infinito", 1998, Genre.NOVELA),
+               new Book("978-25", "The Hobbit", 2017, Genre.THRILLER),
+               new Book("923-45", "Puente al infinito", 1998, Genre.NOVELA),
+               new Book("978-25", "The Hobbit", 2016, Genre.THRILLER)
+       );
+    return    myBooks.stream()
+               .filter(book -> book.isbn()
+                       .equals(isbn))
+               .findFirst();
+   }
 }
