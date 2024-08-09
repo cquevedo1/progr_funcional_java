@@ -13,10 +13,11 @@ public class Main {
     public Main() {
 
         List<Book> myBooks = Arrays.asList(
+                new Book("978-25", "The Hobbit", 2017, Genre.THRILLER),
                 new Book("345-89", "Los ojos del dragon", 2018, Genre.TERROR),
                 new Book("923-45", "Puente al infinito", 1998, Genre.NOVELA),
-                new Book("978-25", "The Hobbit", 2017, Genre.THRILLER),
                 new Book("923-45", "Puente al infinito", 1998, Genre.NOVELA),
+                new Book("923-46", "Segunda novela", 1998, Genre.NOVELA),
                 new Book("978-25", "The Hobbit", 2016, Genre.THRILLER)
         );
 
@@ -163,18 +164,33 @@ public class Main {
 
         //Recolección doble y combinación. Se desea calcular la diferencia de años
         // entre el libro mas viejo y el más nuevo
-        myBooks.stream()
-                .map(Book::yearOfPublication)
-                .collect(teeing(
-                                maxBy(Integer::compare),
-                                minBy(Integer::compare),
-                                (maxOptional, minOptional) -> maxOptional.map(max -> max - minOptional.get())
-                        )
-                )
-                .ifPresentOrElse(
-                        (diferencia -> System.out.println("Diferencia entre el más viejo y el mas nuevo: " + diferencia +
-                                " años")),
-                        () -> System.out.println("No hay libros en la lista"));
+//        myBooks.stream()
+//                .map(Book::yearOfPublication)
+//                .collect(teeing(
+//                                maxBy(Integer::compare),
+//                                minBy(Integer::compare),
+//                                (maxOptional, minOptional) -> maxOptional.map(max -> max - minOptional.get())
+//                        )
+//                )
+//                .ifPresentOrElse(
+//                        (diferencia -> System.out.println("Diferencia entre el más viejo y el mas nuevo: " + diferencia +
+//                                " años")),
+//                        () -> System.out.println("No hay libros en la lista"));
 
+
+        //Filtrar y ordenar tras recolectar a mapa. Encadenado de operaciones
+        //Objetivo: Obtener todos los géneros de libros ordenados de mayor a menor número de libros,
+        // pero quedándonos con sólo los géneros que tengan más de un libro
+        Map<Genre, Long> result = myBooks.stream()
+                .collect(groupingBy(
+                        Book::genre,
+                        counting()))
+                .entrySet()
+                .stream()
+                .filter(genreLongEntry -> genreLongEntry.getValue() > 1)
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue,(entry1, entry2) -> entry1, LinkedHashMap::new));
+
+        System.out.println(result);
     }
 }
